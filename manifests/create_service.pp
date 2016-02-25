@@ -52,7 +52,8 @@ define glassfish::create_service (
   $mode          = 'domain',
   $das_port      = undef,
   $status_cmd    = undef,
-  $service_name  = undef) {
+  $service_name  = undef,
+  $asadmin_passfile = $glassfish::asadmin_passfile) {
   # Check that we've got a domain name if domain mode.
   if $mode == 'domain' and !$domain_name {
     fail('Domain name must be specified to install service for domain mode.')

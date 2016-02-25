@@ -13,11 +13,12 @@ GLASSFISH_BIN="<%= scope.lookupvar('glassfish::glassfish_dir') %>/glassfish/bin"
 
 # Setup Domain and User values
 DOMAIN="<%= @domain_name %>"
+PWFILE="<%= @asadmin_passfile %>"
 USER="<%= @runuser %>"
 
 start() {
 	echo -n "Starting glassfish domain $DOMAIN: "
-	daemon --user $USER --pidfile /var/run/glassfish_$DOMAIN.pid "$GLASSFISH_BIN/asadmin start-domain $DOMAIN"
+	daemon --user $USER --pidfile /var/run/glassfish_$DOMAIN.pid "$GLASSFISH_BIN/asadmin start-domain --passwordfile $PWFILE $DOMAIN"
 	RETVAL=$?
 	if [ $RETVAL -eq 0 ]; then
 		PID=`ps U $USER | grep $DOMAIN | awk '{ print $1}'`
